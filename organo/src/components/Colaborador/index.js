@@ -1,13 +1,13 @@
 import './Colaborador.css'
 import { TrashSimple } from '@phosphor-icons/react'
 
-const Colaborador = ({ nome, imagem, cargo, corDeFundo, onDelete }) => {
+const Colaborador = ({ colaborador,nome, imagem, cargo, corDeFundo, onDelete }) => {
     return (
         <div className='colaborador'>
             <TrashSimple
             	className='deletar' 
             	size={24} 
-            	onClick={onDelete}
+            	onClick={(e) => onDelete(colaborador.id)}
             />
             {/* <div className='deletar' onClick={onDelete}>deletar</div>     */}
             <div className='cabecalho' style={{ backgroundColor: corDeFundo }}>

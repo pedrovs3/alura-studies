@@ -2,7 +2,6 @@
   "name": "course-1-context",
   "version": "0.1.0",
   "private": true,
-  "engines": {"node": "16"},
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",

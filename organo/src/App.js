@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Banner from './components/Banner';
 import Formulario from './components/Formulario';
 import Time from './components/Time';
@@ -64,10 +64,29 @@ function App() {
 		}))
 	}
 
+	const criaTime = (novoTime) => {
+		times.forEach(timeExistente => {
+			if(timeExistente.nome === novoTime.nome) throw new Error("Nome já cadastrado!")
+		})
+		setTimes([...times, novoTime])
+	}
+
+	const resolverFavorito = (id) => {	
+		setColaboradores(colaboradores.map(colaborador => {
+			if(colaborador.id === id) colaborador.favorito = !colaborador.favorito
+
+			return colaborador
+		}))
+	}
+
   return (
     <div className="App">
       <Banner />
-      <Formulario times={times.map(time => time.nome)} aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)}/>
+      <Formulario 
+				times={times.map(time => time.nome)} 
+				aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)}
+				aoCriarTime={time => criaTime(time)}
+			/>
 
       {times.map(time => <Time 
         key={time.id} 
@@ -77,6 +96,7 @@ function App() {
         colaboradores={colaboradores.filter(colaborador => colaborador.time === time.nome)}
         onDelete={deletarColaborador}
 				changeColor={onChangeTeamColor}
+				aoFavoritar={resolverFavorito}
       />)}   
 
     </div>

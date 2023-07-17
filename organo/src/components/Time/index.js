@@ -2,7 +2,7 @@ import hexToRgba from 'hex-to-rgba'
 import Colaborador from '../Colaborador'
 import './Time.css'
 
-const Time = ({ colaboradores, nome, cor, onDelete, changeColor, id }) => {
+const Time = ({ colaboradores, nome, cor, onDelete, changeColor, id, aoFavoritar }) => {
     const css = { backgroundColor: hexToRgba(cor, 0.6) }
 
     return (
@@ -19,6 +19,7 @@ const Time = ({ colaboradores, nome, cor, onDelete, changeColor, id }) => {
                         cargo={colaborador.cargo} 
                         imagem={colaborador.imagem}
                         onDelete={onDelete}
+												aoFavoritar={aoFavoritar}
                         />)
                 } )}
             </div>

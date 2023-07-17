@@ -3,47 +3,21 @@ import Banner from './components/Banner';
 import Formulario from './components/Formulario';
 import Time from './components/Time';
 import {v4 as uuidv4 } from 'uuid'
+import { EyeClosed, EyeSlash } from '@phosphor-icons/react';
+import './index.css'
+
 
 function App() {
-	const [times, setTimes ] = useState([
-    {
-      id: uuidv4(),
-			nome: 'Programação',
-      cor: '#D9F7E9'
-    },
-    {
-      id: uuidv4(),
-			nome: 'Front-End',
-      cor: '#E8F8FF'
-    },
-    {
-      id: uuidv4(),
-			nome: 'Data Science',
-      cor: '#F0F8E2'
-    },
-    {
-      id: uuidv4(),
-			nome: 'Devops',
-      cor: '#FDE7E8'
-    },
-    {
-      id: uuidv4(),
-			nome: 'UX e Design',
-      cor: '#FAE9F5'
-    },
-    {
-      id: uuidv4(),
-			nome: 'Mobile',
-      cor: '#FFF5D9'
-    },
-    {
-      id: uuidv4(),
-			nome: 'Inovação e Gestão',
-      cor: '#FFEEDF'
-    }
-  ])
+	const [times, setTimes ] = useState([])
+	const [formVisibility, setFormVisibility] = useState(true)
 
-  const [colaboradores, setColaboradores] = useState([])
+  const [colaboradores, setColaboradores] = useState([{	
+		id: uuidv4(),
+		nome: 'Pedro',
+		cargo: 'Dev',
+		imagem: 'https://avatars.githubusercontent.com/u/86010036?v=4',
+		time: 'Front-End'
+	}])
 
   const aoNovoColaboradorAdicionado = (colaborador) => {
     debugger
@@ -79,15 +53,53 @@ function App() {
 		}))
 	}
 
+	const toggleVisibility = () => {
+		setFormVisibility(!formVisibility)
+	}
+
+	const propsButtonVisibility = {
+		weight:'thin',
+		onClick:toggleVisibility,
+		className: 'button-visibility'
+	}
+
+	useEffect(() => {
+		async function loadTeams() {
+			await fetch('http://localhost:3000/times')
+			.then(response => response.json())
+			.then(data => setTimes(data))
+		}
+		async function loadColab() {
+			await fetch('http://localhost:3000/colaboradores')
+			.then(response => response.json())
+			.then(data => setColaboradores(data))
+		}
+
+		loadColab()
+		loadTeams()
+	}, [])
+
   return (
     <div className="App">
       <Banner />
-      <Formulario 
-				times={times.map(time => time.nome)} 
-				aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)}
-				aoCriarTime={time => criaTime(time)}
-			/>
-
+			{
+				formVisibility ? (
+					<Formulario 
+						times={times.map(time => time.nome)} 
+						aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)}
+						aoCriarTime={time => criaTime(time)}
+						visible={formVisibility}
+					/>
+				) :(<></>)
+			}
+			<div className='divider'>
+				{formVisibility 
+				? <EyeSlash size={32} {...propsButtonVisibility} /> 
+				: <EyeClosed size={32} {...propsButtonVisibility} />
+				}
+			</div>
+			
+			
       {times.map(time => <Time 
         key={time.id} 
 				id={time.id}

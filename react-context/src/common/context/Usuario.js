@@ -5,7 +5,7 @@ UserContext.displayName = `Usuário`;
 
 export default function UserProvider({ children }) {
   const [nome, setNome] = useState("");
-  const [saldo, setSaldo] = useState(0);
+  const [saldo, setSaldo] = useState(0.0);
 
   return (
     <UserContext.Provider value={{ setNome, setSaldo, nome, saldo }}>

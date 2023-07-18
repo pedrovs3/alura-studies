@@ -1,30 +1,16 @@
 import { Container } from "./styles";
-import { memo, useContext } from "react";
+import { memo } from "react";
 import { IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import { CarrinhoContext } from "common/context/Carrinho";
+import { useCarrinhoContext } from "common/context/Carrinho";
 
-function Produto({ nome, foto, id, valor, unidade }) {
-  const { carrinho, setCarrinho } = useContext(CarrinhoContext);
-
-  const addItemToCart = (newProduct) => {
-    const existInCart = carrinho.some(
-      (itemCarrinho) => itemCarrinho.id === newProduct.id
-    );
-
-    if (!existInCart) {
-      newProduct.quantidade = 1;
-      return setCarrinho([...carrinho, newProduct]);
-    }
-
-    setCarrinho((carrinhoAnterior) =>
-      carrinhoAnterior.map((item) => {
-        if (item.id === id) item.quantidade += 1;
-        return item;
-      })
-    );
-  };
+function Produto({ nome, foto, id, valor, quantidade }) {
+  // A função "addItemToCart" foi extraida do componente para tirar essa responsabilidade do componente
+  const { carrinho, addItemToCart, deleteItemFromCart } = useCarrinhoContext();
+  const produtoNoCarrinho = carrinho.find(
+    (itemNoCarrinho) => itemNoCarrinho.id === id
+  );
 
   return (
     <Container>
@@ -35,10 +21,18 @@ function Produto({ nome, foto, id, valor, unidade }) {
         </p>
       </div>
       <div>
-        <IconButton color="secondary">
+        <IconButton
+          disabled={!produtoNoCarrinho}
+          color="secondary"
+          onClick={() => deleteItemFromCart(id)}
+        >
           <RemoveIcon />
         </IconButton>
-        <IconButton onClick={() => addItemToCart({ id, nome, foto, valor })}>
+        {produtoNoCarrinho?.quantidade || 0}
+        <IconButton
+          color="primary"
+          onClick={() => addItemToCart({ id, nome, foto, valor })}
+        >
           <AddIcon />
         </IconButton>
       </div>

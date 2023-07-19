@@ -11,6 +11,7 @@ export default function DefaultPage() {
         </div>
       </header>
       <div className={stylesTema.container}>
+        {/* Outlet é como se fosse o children (em um componente comum) utilizado nas rotas */}
         <Outlet />
       </div>
     </>

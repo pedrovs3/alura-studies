@@ -5,12 +5,18 @@ import SelecaoCliente from "../pages/cadastro/SelecaoCliente";
 import LayoutBaseCadastro from "../pages/cadastro/LayoutBaseCadastro";
 import LayoutBase from "../pages/LayoutBase";
 import Interesses from "../pages/interesses";
-import DadosPessoais from "../pages/DadosPessoais";
+import DadosPessoais from "../pages/dadosPessoais";
+import Concluido from "../pages/cadastro/concluido";
+import CadastroUsuarioProvider from "../common/context/CadastroUsuario";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <LayoutBase />,
+        element: (
+            <CadastroUsuarioProvider>
+                <LayoutBase />
+            </CadastroUsuarioProvider>
+        ),
         children: [
             {
                 path: 'cadastro',
@@ -30,7 +36,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: 'concluido',
-                        element: <h1>Concluido</h1>
+                        element: <Concluido />
                     }
                 ]
             }

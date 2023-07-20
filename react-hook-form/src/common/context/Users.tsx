@@ -1,4 +1,4 @@
-import { Children, createContext, useState } from "react";
+import { Children, createContext, useContext, useState } from "react";
 
 const users = [
   {
@@ -18,6 +18,11 @@ interface IUsers {
   email: ''
 }
 
+interface IUsersContext {
+  users?: IUsers[]
+  setUsers?: () => void
+}
+
 export const UsersContext = createContext(users);
 
 export default function UserProvider({ children }: { children: React.ReactNode }) {
@@ -31,5 +36,10 @@ export default function UserProvider({ children }: { children: React.ReactNode }
 }
 
 export const useUsersContext = () => {
-  
+  const { users, setUsers } = useContext(UsersContext)
+
+  return {
+    users,
+    setUsers
+  }
 }

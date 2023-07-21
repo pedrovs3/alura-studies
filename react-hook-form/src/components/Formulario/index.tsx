@@ -1,6 +1,8 @@
 'use client'
-import { useForm } from "react-hook-form"
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import styles from "./Formulario.module.scss"
+import { useUsersContext } from "@/common/context/Users";
+import { IUsers } from "@/app/layout";
 
 export default function Formulario() {
   const { register,
@@ -8,9 +10,10 @@ export default function Formulario() {
     watch,
     formState: { errors },
   } = useForm();
+  const { setUsers } = useUsersContext();
 
-  const onSubmit = (e) => {
-    console.log(e)
+  const onSubmit = (data: any) => {
+    setUsers((estadoAnterior: IUsers[]) => [...estadoAnterior, data])
   }
 
   return (

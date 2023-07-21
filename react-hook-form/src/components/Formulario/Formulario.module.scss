@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     justify-content: stretch;
-    align-items: start;
+    align-items: flex-start;
     text-rendering: geometricPrecision;
   }
 
@@ -26,6 +26,9 @@
     margin-top: 20px;
     padding: 10px 20px;
     border-radius: 50px;
+    font-weight: bold;
+    font-size: 18px;
+    font-smooth: always;
     border: none;
     transition: all 300ms ease-in-out;
   }
@@ -33,6 +36,7 @@
   input[type="submit"]:hover {
     background-color: #2e8d33;
     color: #ffffff;
+    cursor: pointer;
   }
 
 }

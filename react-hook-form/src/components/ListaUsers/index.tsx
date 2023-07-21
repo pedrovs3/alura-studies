@@ -9,7 +9,7 @@ export default function ListaUsers() {
   return (
     <div className={styles.lista}>
       {users.map((user, index) => (
-        <Link key={index} href={`/user/[name]`} as={`/user/${user.firstName}`}>
+        <Link key={index} href={`/user/[email]`} as={`/user/${user.email}`}>
           <div className={styles.lista__card} key={index}>
             <h3 className={styles.lista__card__name}>{user.firstName} <span>{user.lastName}</span></h3>
             <span className={styles.email}>{user.email}</span>
